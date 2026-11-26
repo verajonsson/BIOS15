@@ -9,6 +9,13 @@ dat <- read.csv("Eulaema.csv")
 pairs(dat[, c(1, 5:12)], panel = panel.smooth)
 
 
+#Get some summary statistics
+dat |> 
+  summarise(mean(forest.), min(forest.), max(forest.),
+            mean(MAP), min(MAP), max(MAP),
+            mean(Eulaema_nigrita), min(Eulaema_nigrita), max(Eulaema_nigrita))
+
+
 #Poisson regression
 m <- glm(Eulaema_nigrita ~ effort + forest. + MAP, "poisson", data = dat)
 
@@ -18,7 +25,7 @@ summary(m) #overdispersion (residual deviance >> df)
 
 #Trying different models and comparing AIC
 
-m1 <- glm.nb(Eulaema_nigrita ~ effort + MAP + forest., data = dat)
+m1 <- glm.nb(Eulaema_nigrita ~ forest. + MAP + effort, data = dat)
 m2 <- glm.nb(Eulaema_nigrita ~ MAP + forest., data = dat)
 m3 <- glm.nb(Eulaema_nigrita ~ forest. + effort, data = dat)
 m4 <- glm.nb(Eulaema_nigrita ~ MAP + effort, data = dat)
