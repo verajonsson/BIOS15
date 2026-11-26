@@ -1,6 +1,7 @@
 
 library(MuMIn)
 library(MASS)
+library(tidyverse)
 
 #Importing data
 dat <- read.csv("Eulaema.csv")
